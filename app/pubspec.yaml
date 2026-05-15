@@ -28,7 +28,7 @@ dependencies:
   path_provider: ^2.1.4
 
   # Maps (free OSM)
-  flutter_map: ^7.0.2
+  flutter_map: ^8.3.0
   latlong2: ^0.9.1
 
   # Calendar UI
