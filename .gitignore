@@ -1,0 +1,36 @@
+# Flutter
+app/.dart_tool/
+app/.flutter-plugins
+app/.flutter-plugins-dependencies
+app/.packages
+app/.pub-cache/
+app/.pub/
+app/build/
+app/ios/Pods/
+app/ios/.symlinks/
+app/android/.gradle/
+app/android/local.properties
+app/macos/Pods/
+app/windows/flutter/ephemeral/
+app/linux/flutter/ephemeral/
+app/macos/Flutter/ephemeral/
+app/**/GeneratedPluginRegistrant.*
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# Secrets / env
+.env
+.env.local
+env.json
+
+# Supabase
+supabase/.branches/
+supabase/.temp/
+supabase/.env
+
+# OS
+.DS_Store
+Thumbs.db

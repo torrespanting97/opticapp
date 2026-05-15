@@ -1,0 +1,88 @@
+name: salud_visual
+description: "Optometry SaaS — mobile + Windows desktop + web. One login, one codebase."
+publish_to: 'none'
+version: 0.1.0+1
+
+environment:
+  sdk: ">=3.3.0 <4.0.0"
+  flutter: ">=3.22.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # State management
+  flutter_riverpod: ^2.5.1
+  riverpod_annotation: ^2.3.5
+
+  # Navigation
+  go_router: ^14.2.7
+
+  # Supabase backend
+  supabase_flutter: ^2.5.6
+
+  # Local DB (offline mirror + outbox)
+  drift: ^2.20.0
+  drift_flutter: ^0.2.0
+  sqlite3_flutter_libs: ^0.5.24
+  path_provider: ^2.1.4
+
+  # Maps (free OSM)
+  flutter_map: ^7.0.2
+  latlong2: ^0.9.1
+
+  # Calendar UI
+  syncfusion_flutter_calendar: ^26.2.10  # free community ed.
+  table_calendar: ^3.1.2
+
+  # PDF / Print (Reporte cliente)
+  printing: ^5.13.2
+  pdf: ^3.11.1
+
+  # AI receipt scanner (calls our edge function)
+  image_picker: ^1.1.2
+  flutter_image_compress: ^2.3.0
+  http: ^1.2.2
+
+  # Misc
+  intl: ^0.19.0
+  freezed_annotation: ^2.4.4
+  json_annotation: ^4.9.0
+  uuid: ^4.5.0
+  url_launcher: ^6.3.0
+  flutter_secure_storage: ^9.2.2
+  connectivity_plus: ^6.0.5
+  local_auth: ^2.3.0
+  collection: ^1.18.0
+
+  # Deep links (OAuth callback + universal links)
+  app_links: ^6.3.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+  build_runner: ^2.4.13
+  riverpod_generator: ^2.4.3
+  freezed: ^2.5.7
+  json_serializable: ^6.8.0
+  drift_dev: ^2.20.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/fonts/
+  fonts:
+    - family: DMSans
+      fonts:
+        - asset: assets/fonts/DMSans.ttf
+        - asset: assets/fonts/DMSans.ttf
+          weight: 500
+        - asset: assets/fonts/DMSans.ttf
+          weight: 700
+    - family: DMMono
+      fonts:
+        - asset: assets/fonts/DMMono-Regular.ttf
+        - asset: assets/fonts/DMMono-Medium.ttf
+          weight: 500

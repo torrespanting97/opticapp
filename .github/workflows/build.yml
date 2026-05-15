@@ -1,0 +1,78 @@
+name: build
+
+on:
+  push: { branches: [main] }
+  pull_request: { branches: [main] }
+
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with: { flutter-version: '3.22.0', channel: 'stable' }
+      - run: flutter pub get
+        working-directory: app
+      - run: |
+          flutter build apk --release \
+            --dart-define=SUPABASE_URL=${{ secrets.SUPABASE_URL }} \
+            --dart-define=SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}
+        working-directory: app
+      - uses: actions/upload-artifact@v4
+        with:
+          name: salud-visual-android
+          path: app/build/app/outputs/flutter-apk/app-release.apk
+
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with: { flutter-version: '3.22.0', channel: 'stable' }
+      - run: flutter config --enable-windows-desktop
+      - run: flutter pub get
+        working-directory: app
+      - run: |
+          flutter build windows --release `
+            --dart-define=SUPABASE_URL=${{ secrets.SUPABASE_URL }} `
+            --dart-define=SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}
+        working-directory: app
+      - uses: actions/upload-artifact@v4
+        with:
+          name: salud-visual-windows
+          path: app/build/windows/x64/runner/Release/
+
+  web:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with: { flutter-version: '3.22.0', channel: 'stable' }
+      - run: flutter pub get
+        working-directory: app
+      - run: |
+          flutter build web --release \
+            --dart-define=SUPABASE_URL=${{ secrets.SUPABASE_URL }} \
+            --dart-define=SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}
+        working-directory: app
+      - uses: actions/upload-artifact@v4
+        with:
+          name: salud-visual-web
+          path: app/build/web
+
+  supabase:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: supabase/setup-cli@v1
+        with: { version: latest }
+      - run: |
+          supabase link --project-ref ${{ secrets.SUPABASE_PROJECT_REF }}
+          supabase db push
+          supabase functions deploy extract-receipt
+          supabase functions deploy calendar-sync
+          supabase functions deploy geocode
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+          SUPABASE_DB_PASSWORD:  ${{ secrets.SUPABASE_DB_PASSWORD }}
